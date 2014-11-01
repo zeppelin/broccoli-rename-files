@@ -39,3 +39,22 @@ it('should keep the old file when instructed to do so', function () {
     assert(fs.existsSync(newFilepath));
   });
 });
+
+it('allows overriding transformFilename', function () {
+  var options = {
+    foo: '-bar',
+    transformFilename: function(filename, basename, extname) {
+      return filename + '-qux-' + basename + this.options.foo + extname
+    }
+  };
+
+  var builder = new broccoli.Builder(renameFiles('fixture', options));
+
+  return builder.build().then(function(dir) {
+    var oldFilepath = path.join(dir.directory, 'dummy.js');
+    var newFilepath = path.join(dir.directory, 'dummy.js-qux-dummy-bar.js');
+
+    assert(!fs.existsSync(oldFilepath));
+    assert(fs.existsSync(newFilepath));
+  });
+});

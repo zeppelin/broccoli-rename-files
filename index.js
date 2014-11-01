@@ -32,12 +32,18 @@ RenameFileFilter.prototype.getDestFilePath = function(destFilePath) {
   var dirname =  path.dirname(destFilePath);
   var extname =  path.extname(destFilePath);
   var basename =  path.basename(destFilePath, extname);
+  var transformFunction = this.options.transformFilename || this.transformFilename
 
+  var filename = transformFunction.call(this, basename + extname, basename, extname);
+
+  return path.join(dirname, filename);
+};
+
+RenameFileFilter.prototype.transformFilename = function(filename, basename, extname) {
   var prepend = this.options.prepend || '';
   var append = this.options.append || '';
 
-  var filename = prepend + basename + append + extname;
-  return path.join(dirname, filename);
+  return prepend + basename + append + extname;
 };
 
 module.exports = RenameFileFilter;
