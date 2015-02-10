@@ -18,6 +18,7 @@
   },
   "keywords": [
     "broccoli",
+    "broccoli-plugin",
     "rename",
     "prepend",
     "append",
