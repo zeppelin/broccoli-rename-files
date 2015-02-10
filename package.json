@@ -1,6 +1,6 @@
 {
   "name": "broccoli-rename-files",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Rename files",
   "main": "index.js",
   "author": "Gabor Babicz <gabor.babicz@gmail.com>",
