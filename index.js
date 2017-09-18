@@ -1,6 +1,5 @@
 'use strict';
 var Filter = require('broccoli-filter');
-var objectAssign = require('object-assign');
 var copyDereferenceSync = require('copy-dereference').sync;
 var path = require('path');
 
@@ -9,7 +8,7 @@ function RenameFileFilter(inputTree, options) {
     return new RenameFileFilter(inputTree, options);
   }
 
-  this.inputTree = inputTree;
+  Filter.call(this, inputTree);
   this.options = options || {};
 }
 
@@ -22,7 +21,10 @@ RenameFileFilter.prototype.processString = function(str) {
 
 RenameFileFilter.prototype.processFile = function(srcDir, destDir, relativePath) {
   if (this.options.keepOriginal) {
-    copyDereferenceSync(srcDir + '/' + relativePath, destDir + '/' + relativePath);
+    copyDereferenceSync(
+      path.resolve(srcDir, relativePath),
+      path.resolve(destDir, relativePath)
+    );
   }
 
   return Filter.prototype.processFile.apply(this, arguments);
@@ -32,7 +34,7 @@ RenameFileFilter.prototype.getDestFilePath = function(destFilePath) {
   var dirname =  path.dirname(destFilePath);
   var extname =  path.extname(destFilePath);
   var basename =  path.basename(destFilePath, extname);
-  var transformFunction = this.options.transformFilename || this.transformFilename
+  var transformFunction = this.options.transformFilename || this.transformFilename;
 
   var filename = transformFunction.call(this, basename + extname, basename, extname);
 

@@ -5,9 +5,8 @@ Rename files in a tree. Currently only prepend/append is supported and doesn't t
 ## Install
 
 ```sh
-$ npm install --save broccoli-rename-files
+$ npm install broccoli-rename-files
 ```
-
 
 ## Simple Usage
 
@@ -15,20 +14,20 @@ You can easily add text around a filename using the `prepend` and `append` optio
 The following example renames `path/to/file.txt` to `path/to/wow-file-new.txt`
 
 ```js
-var renameFiles = require('broccoli-rename-files');
-tree = renameFiles(tree, {
+var BroccoliRenameFiles = require('broccoli-rename-files');
+
+tree = new BroccoliRenameFiles(tree, {
   prepend: 'wow-',
   append: '-new'
 });
 ```
 
-
 ## Complex Usage
 
-To achieve more complex renames, override the filter's  `transformFilename` 
-function. It receives the full filename, the basename, and the extension name 
-(as calculated by the 
-[npm path module](http://nodejs.org/docs/v0.4.9/api/path.html#path.basename)).
+To achieve more complex renames, override the filter's  `transformFilename`
+function. It receives the full filename, the basename, and the extension name
+(as calculated by node's native
+[path module](http://nodejs.org/docs/v0.4.9/api/path.html#path.basename)).
 These arguments are somewhat redundant, but they allow you to easily construct
 the filename you want.
 
@@ -47,9 +46,9 @@ function(filename, basename, extname) {
 And here is a version that renames `foo.module.js` to `foo.js`.
 
 ```js
-var renameFiles = require('broccoli-rename-files');
+var BroccoliRenameFiles = require('broccoli-rename-files');
 
-tree = renameFiles(tree, {
+tree = new BroccoliRenameFiles(tree, {
   transformFilename: function(filename, basename, extname) {
     return filename.replace('.module', '');
   }
@@ -70,6 +69,7 @@ filters that do that well.
 
 `options.append` *{String}* Optional. The string to be appended to the filename.
 
+`options.keepOriginal` *{Boolean}* Optional. Whether to keep the original file as well.
 
 ## License
 
