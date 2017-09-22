@@ -1,3 +1,5 @@
+/* jshint mocha: true */
+
 'use strict';
 var assert = require('assert');
 var fs = require('fs');
@@ -13,9 +15,9 @@ it('should exist under the new name', function () {
 
   var builder = new broccoli.Builder(renameFiles('fixture', options));
 
-  return builder.build().then(function(dir) {
-    var oldFilepath = path.join(dir.directory, 'dummy.js');
-    var newFilepath = path.join(dir.directory, 'hello-dummy-world.js');
+  return builder.build().then(function() {
+    var oldFilepath = path.join(builder.outputPath, 'dummy.js');
+    var newFilepath = path.join(builder.outputPath, 'hello-dummy-world.js');
 
     assert(!fs.existsSync(oldFilepath));
     assert(fs.existsSync(newFilepath));
@@ -31,9 +33,9 @@ it('should keep the old file when instructed to do so', function () {
 
   var builder = new broccoli.Builder(renameFiles('fixture', options));
 
-  return builder.build().then(function(dir) {
-    var oldFilepath = path.join(dir.directory, 'dummy.js');
-    var newFilepath = path.join(dir.directory, 'hello-dummy-world.js');
+  return builder.build().then(function() {
+    var oldFilepath = path.join(builder.outputPath, 'dummy.js');
+    var newFilepath = path.join(builder.outputPath, 'hello-dummy-world.js');
 
     assert(fs.existsSync(oldFilepath));
     assert(fs.existsSync(newFilepath));
@@ -44,15 +46,15 @@ it('allows overriding transformFilename', function () {
   var options = {
     foo: '-bar',
     transformFilename: function(filename, basename, extname) {
-      return filename + '-qux-' + basename + this.options.foo + extname
+      return filename + '-qux-' + basename + this.options.foo + extname;
     }
   };
 
   var builder = new broccoli.Builder(renameFiles('fixture', options));
 
-  return builder.build().then(function(dir) {
-    var oldFilepath = path.join(dir.directory, 'dummy.js');
-    var newFilepath = path.join(dir.directory, 'dummy.js-qux-dummy-bar.js');
+  return builder.build().then(function() {
+    var oldFilepath = path.join(builder.outputPath, 'dummy.js');
+    var newFilepath = path.join(builder.outputPath, 'dummy.js-qux-dummy-bar.js');
 
     assert(!fs.existsSync(oldFilepath));
     assert(fs.existsSync(newFilepath));
