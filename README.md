@@ -1,5 +1,11 @@
 # [broccoli](https://github.com/joliss/broccoli)-rename-files [![Build Status](https://travis-ci.org/zeppelin/broccoli-rename-files.svg?branch=master)](https://travis-ci.org/zeppelin/broccoli-rename-files)
 
+## Deprecated
+
+This project has been **deprecated** in favor of [broccoli-funnel](https://www.npmjs.com/package/broccoli-funnel). Please see `getDestinationPath` for a corresponding API.
+
+---
+
 Rename files in a tree. Currently only prepend/append is supported and doesn't touch file extensions, but will eventually add more features.
 
 ## Install
